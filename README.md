@@ -1,23 +1,23 @@
 # Sudoku Solver
 An AI homework assignment
 
-# Program Design
+## Program Design
 The program allows for three different algorithms to be used to solve sudoku boards provided in the input file
 - The program starts by identifying the provided input file and solver algorithm
 - The program parses boards from the input file and solves them
 - All three algorithms use recursion to find a solution
 - After solving a board (or not), the program will print the solution(s) to the output file
 
-# User Manual
+## User Manual
 The following subsections describe how to compile, run, and interact with the program
 
-## Compiling
+### Compiling
 - Make sure you have Java and Maven on your system before compiling
 - Navigate to the top level directory. The `src` folder should be visible
 - Run `mvn package` to compile the .jar file to the `/target` directory
 - Navigate to the `/target` directory to run the program
 
-## Running
+### Running
 - Run with `java -jar SudokuSolver-1.0.0.jar [input_file] [algorithm]`
 - Where the `input_file` is the name of the text file to read from
   - Make sure your input files are in the `/target` directory
@@ -60,6 +60,7 @@ Computation Time: {ms}ms
 4  9  1  5  2  6  3  7  8  
 2  7  5  3  8  9  4  1  6  
 ```
+Output placeholders:
 - `{board}` The name of the board
 - `{alg}` The algorithm used
 - `{iter}` The number of iterations (unique number selections)
@@ -85,17 +86,17 @@ Computation Time: {ms}ms
 ```
 - This shows the state of how the board could be solved. It may not be apparent what is incorrect with the board
 
-# Design Description
+## Design Description
 The following section describes the algorithms more in-depth and examines their performance
 
-## Board Selection
+### Board Selection
 When testing each algorithm, I used the file `test_boards.txt` which is provided in the submission folder
 - Aside from the required 3 easy/medium/hard boards, I wanted to find more difficult boards for my program to solve
 - Boards 1-9 are from [sudoku.com](https://sudoku.com/)
 - Boards 10-12 are from [sudoku-solutions.com](https://www.sudoku-solutions.com/)
 - Boards 13-21 are from [Leetcode Question 37](https://leetcode.com/problems/sudoku-solver/description/) and guarantee only one solution
 
-## Simplification
+### Simplification
 The program takes three steps to simplify the problem before starting a search function:
 1. For all positions, the possible answers are reduced by checking their initially solved row, column, and 3x3 grid
 2. Any positions with exactly one possible answer are marked as solved. This repeats until a full pass of the board makes no changes, otherwise this step is repeated
@@ -107,20 +108,20 @@ The program takes three steps to simplify the problem before starting a search f
     - This simplification step greatly reduces the depth and branching factor of the search tree
 - When a solution is identified, the search stops immediately and the solution is presented
 
-## Depth First Search `dfs`
+### Depth First Search `dfs`
 - DFS always makes the first possible choice it can make
 - Each choice has the simplification algorithm run on it before further branching
 
-## Minimum Remaining Value `mrv`
+### Minimum Remaining Value `mrv`
 - At each step, MRV checks all unsolved positions to find the one with the least number of possible options
 - This position recursively calls itself and tries all possible answers in order
 
-## Least Constrained Value `lcv`
+### Least Constrained Value `lcv`
 - At each step, LCV fills a priority queue
 - Ordering is determined by which board has the largest number of permutations after simplification (product of the number of possibilities of all unsolved positions)
 - These boards recursively calls themselves and try all possible boards in order
 
-## Results Summary
+### Results Summary
 - All three algorithms complete in roughly the same amount of time apart from leetcode3, where LCV is considerable slower
 - The graph omits leetcode2 because the runtimes stretched the graph too much, especially LCV (6.03,11.06,73.46)
 
